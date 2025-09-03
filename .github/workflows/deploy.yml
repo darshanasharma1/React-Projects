@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [posts-app, ToggleTheme, task-manager]
+        project: [ToggleTheme, task-manager]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
