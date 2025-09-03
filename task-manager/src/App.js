@@ -1,6 +1,3 @@
-import logo from './logo.svg';
-import react from "react";
-
 import TaskManager from "./TaskManager";
 
 function App() {
