@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders theme toggle app', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  // Change to match your actual content
+  const headingElement = screen.getByText(/React Project-6/i);
+  expect(headingElement).toBeInTheDocument();
 });
