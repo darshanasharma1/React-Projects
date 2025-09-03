@@ -33,4 +33,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ${{ matrix.project }}/build
           destination_dir: ${{ matrix.project }}
-          force_orphan: true  # ← This will force push and overwrite
+          force_orphan: true
