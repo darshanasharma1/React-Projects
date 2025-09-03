@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { ThemeProvider } from './Context/Theme';
 import { useState } from 'react';

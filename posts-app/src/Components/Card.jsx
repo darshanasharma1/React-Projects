@@ -1,7 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ThemeBtn from './ThemeButton';
-import { ThemeContext } from '../Context/Theme';
+import React from 'react';
 
 export default function Card() {
     return (
