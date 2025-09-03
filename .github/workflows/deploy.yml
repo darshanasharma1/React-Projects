@@ -5,44 +5,33 @@ on:
     branches: [main]
 
 jobs:
-  deploy-toggle-theme:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [ToggleTheme, task-manager]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          node-version: '18'
-          
-      - name: Install and Build ToggleTheme
-        run: |
-          cd ToggleTheme
-          npm install
-          npm run build
-          
-      - name: Deploy ToggleTheme
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ToggleTheme/build
-          destination_dir: ToggleTheme
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy-task-manager:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
-          
-      - name: Install and Build Task Manager
-        run: |
-          cd task-manager
-          npm install
-          npm run build
-          
-      - name: Deploy Task Manager
+
+      - name: Install dependencies for ${{ matrix.project }}
+        run: npm install
+        working-directory: ${{ matrix.project }}
+
+      - name: Build ${{ matrix.project }}
+        run: npm run build
+        working-directory: ${{ matrix.project }}
+
+      - name: Deploy ${{ matrix.project }} to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: task-manager/build
-          destination_dir: task-manager
+          publish_dir: ${{ matrix.project }}/build
+          destination_dir: ${{ matrix.project }}
