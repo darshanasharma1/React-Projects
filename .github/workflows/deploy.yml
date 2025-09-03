@@ -1,0 +1,45 @@
+name: Deploy React Projects
+
+on:
+  push:
+    branches:
+      - main  # change if your default branch is different
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project: [posts-app, ToggleTheme, task-manager]
+
+    steps:
+      # Step 1: Checkout repository
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      # Step 2: Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+        working-directory: ${{ matrix.project }}
+
+      # Step 4: Build project
+      - name: Build project
+        run: npm run build
+        working-directory: ${{ matrix.project }}
+
+      # Step 5: Deploy project to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ${{ matrix.project }}/build
+          destination_dir: ${{ matrix.project }}
