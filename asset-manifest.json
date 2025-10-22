@@ -1,15 +1,14 @@
 {
   "files": {
-    "main.css": "/React-Projects/ToggleTheme/static/css/main.02453833.css",
-    "main.js": "/React-Projects/ToggleTheme/static/js/main.c204e284.js",
-    "static/js/453.d0b2d9aa.chunk.js": "/React-Projects/ToggleTheme/static/js/453.d0b2d9aa.chunk.js",
-    "index.html": "/React-Projects/ToggleTheme/index.html",
-    "main.02453833.css.map": "/React-Projects/ToggleTheme/static/css/main.02453833.css.map",
-    "main.c204e284.js.map": "/React-Projects/ToggleTheme/static/js/main.c204e284.js.map",
-    "453.d0b2d9aa.chunk.js.map": "/React-Projects/ToggleTheme/static/js/453.d0b2d9aa.chunk.js.map"
+    "main.css": "/React-Projects/portfolio/static/css/main.d21dd99e.css",
+    "main.js": "/React-Projects/portfolio/static/js/main.a8207152.js",
+    "static/media/logo.svg": "/React-Projects/portfolio/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/React-Projects/portfolio/index.html",
+    "main.d21dd99e.css.map": "/React-Projects/portfolio/static/css/main.d21dd99e.css.map",
+    "main.a8207152.js.map": "/React-Projects/portfolio/static/js/main.a8207152.js.map"
   },
   "entrypoints": [
-    "static/css/main.02453833.css",
-    "static/js/main.c204e284.js"
+    "static/css/main.d21dd99e.css",
+    "static/js/main.a8207152.js"
   ]
 }
