@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 export default function About() {
     return (
@@ -9,7 +8,7 @@ export default function About() {
                     <div className="md:5/12 lg:w-5/12">
                         <img
                             src="https://tailus.io/sources/blocks/left-image/preview/images/startup.png"
-                            alt="image"
+                            alt=""
                         />
                     </div>
                     <div className="md:7/12 lg:w-6/12">
