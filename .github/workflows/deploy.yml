@@ -1,41 +1,38 @@
-name: Deploy React Projects
+name: Deploy Portfolio to GitHub Pages
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches: [ main ]
 
 jobs:
-  deploy-projects:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project: [portfolio, ToggleTheme, task-manager]
-
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Debug folder structure
-        run: ls -R
-
-      - name: Install dependencies for ${{ matrix.project }}
-        run: npm install
-        working-directory: ${{ matrix.project }}
-
-      - name: Build ${{ matrix.project }}
-        run: npm run build
-        working-directory: ${{ matrix.project }}
-
-      - name: Deploy ${{ matrix.project }}
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ matrix.project }}/build
-          destination_dir: ${{ matrix.project }}
-          keep_files: true
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./portfolio
+      
+    - name: Build project
+      run: npm run build
+      working-directory: ./portfolio
+      
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./portfolio/build
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
