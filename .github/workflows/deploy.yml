@@ -20,18 +20,21 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Debug folder structure
+        run: ls -R ${{ github.workspace }}
+
       - name: Install dependencies for ${{ matrix.project }}
         run: npm install
-        working-directory: ${{ matrix.project }}
+        working-directory: ${{ github.workspace }}/${{ matrix.project }}
 
       - name: Build ${{ matrix.project }}
         run: npm run build
-        working-directory: ${{ matrix.project }}
+        working-directory: ${{ github.workspace }}/${{ matrix.project }}
 
       - name: Deploy ${{ matrix.project }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ matrix.project }}/build
+          publish_dir: ${{ github.workspace }}/${{ matrix.project }}/build
           destination_dir: ${{ matrix.project }}
           keep_files: true
