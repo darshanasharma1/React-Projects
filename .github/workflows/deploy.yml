@@ -21,7 +21,11 @@ jobs:
           node-version: '18'
 
       - name: Debug folder structure
-        run: ls -R ${{ github.workspace }}
+        run: |
+          echo "Current working directory:"
+          pwd
+          echo "---- Folder tree ----"
+          ls -R ${{ github.workspace }}
 
       - name: Install dependencies for ${{ matrix.project }}
         run: npm install
