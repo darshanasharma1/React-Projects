@@ -1,31 +1,37 @@
-name: Deploy Portfolio to GitHub Pages
+name: Deploy React Projects
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  build-and-deploy:
+  deploy-projects:
     runs-on: ubuntu-latest
-    
+    strategy:
+      matrix:
+        project: [portfolio, ToggleTheme, task-manager]
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        
-    - name: Install dependencies
-      run: npm install
-      working-directory: portfolio
-      
-    - name: Build project
-      run: npm run build
-      working-directory: portfolio
-      
-    - name: Deploy to gh-pages
-      run: |
-        cd portfolio
-        npm run deploy
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies for ${{ matrix.project }}
+        run: npm install
+        working-directory: ${{ matrix.project }}
+
+      - name: Build ${{ matrix.project }}
+        run: npm run build
+        working-directory: ${{ matrix.project }}
+
+      - name: Deploy ${{ matrix.project }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ matrix.project }}/build
+          destination_dir: ${{ matrix.project }}
+          keep_files: true
