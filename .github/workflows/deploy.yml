@@ -25,16 +25,16 @@ jobs:
 
       - name: Install dependencies for ${{ matrix.project }}
         run: npm install
-        working-directory: ${{ github.workspace }}/${{ matrix.project }}
+        working-directory: ${{ github.workspace }}/React-Projects/${{ matrix.project }}
 
       - name: Build ${{ matrix.project }}
         run: npm run build
-        working-directory: ${{ github.workspace }}/${{ matrix.project }}
+        working-directory: ${{ github.workspace }}/React-Projects/${{ matrix.project }}
 
       - name: Deploy ${{ matrix.project }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ github.workspace }}/${{ matrix.project }}/build
+          publish_dir: ${{ github.workspace }}/React-Projects/${{ matrix.project }}/build
           destination_dir: ${{ matrix.project }}
           keep_files: true
