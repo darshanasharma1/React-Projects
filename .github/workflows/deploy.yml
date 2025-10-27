@@ -22,18 +22,16 @@ jobs:
 
       - name: Debug folder structure
         run: |
-          echo "Current working directory:"
-          pwd
-          echo "---- Folder tree ----"
+          echo "Workspace: ${{ github.workspace }}"
           ls -R ${{ github.workspace }}
 
       - name: Install dependencies for ${{ matrix.project }}
-        run: npm install
         working-directory: ${{ github.workspace }}/${{ matrix.project }}
+        run: npm install
 
       - name: Build ${{ matrix.project }}
-        run: npm run build
         working-directory: ${{ github.workspace }}/${{ matrix.project }}
+        run: npm run build
 
       - name: Deploy ${{ matrix.project }}
         uses: peaceiris/actions-gh-pages@v4
