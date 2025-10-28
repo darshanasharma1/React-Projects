@@ -1,0 +1,42 @@
+name: Deploy React Projects
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-projects:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [portfolio, ToggleTheme, task-manager]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Debug folder structure
+        run: |
+          echo "Workspace: ${{ github.workspace }}"
+          ls -R ${{ github.workspace }}
+
+      - name: Install dependencies for ${{ matrix.project }}
+        working-directory: ${{ github.workspace }}/${{ matrix.project }}
+        run: npm install
+
+      - name: Build ${{ matrix.project }}
+        working-directory: ${{ github.workspace }}/${{ matrix.project }}
+        run: npm run build
+
+      - name: Deploy ${{ matrix.project }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ github.workspace }}/${{ matrix.project }}/build
+          destination_dir: ${{ matrix.project }}
+          keep_files: true
