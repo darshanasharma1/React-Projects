@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Bell, Trash2, Plus, Clock, ChevronDown, ChevronRight } from "lucide-react";
+import { Trash2, Plus, Clock, ChevronDown, ChevronRight } from "lucide-react";
 import "./TaskManager.css";
 
 export default function TaskManager() {
