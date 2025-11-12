@@ -58,11 +58,8 @@ export default function Home() {
             <p className="text-gray-600 mb-4">
               A simple React app demonstrating light/dark theme switching.
             </p>
-            <a
-              href="https://darshanasharma1.github.io/React-Projects/ToggleTheme/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+            <a href="https://darshanasharma1.github.io/React-Projects/ToggleTheme/" target="_blank" rel="noopener noreferrer"
+              className="inline-block px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-all duration-300"
             >
               View Live Demo
             </a>
@@ -77,8 +74,7 @@ export default function Home() {
               Manage daily tasks efficiently — built with React hooks and local storage.
             </p>
             <a
-              href="https://darshanasharma1.github.io/React-Projects/task-manager/"
-              target="_blank"
+              href="https://darshanasharma1.github.io/React-Projects/task-manager/" target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-all duration-300"
             >
