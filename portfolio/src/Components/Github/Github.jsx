@@ -35,7 +35,7 @@ function Github() {
 export default Github;
 
 export const githubInfoLoader = async () => {
-  const response = await fetch('https://api.github.com/users/darshanasharma48');
+  const response = await fetch('https://api.github.com/users/darshanasharma1');
   
   if (!response.ok) {
     throw new Error("Failed to fetch GitHub data");

@@ -1,192 +1,153 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import UserContext from "../../Context/UserContext";
 
-export default function Footer() {
+export default function Header() {
+  const { user, setUser } = useContext(UserContext);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    setMenuOpen(false);
+  };
+
+  const logoSrc = "https://cdn-icons-png.flaticon.com/512/1055/1055687.png";
+
+  const navItems = [
+    { path: "/", label: "Home" },
+    { path: "/about", label: "About" },
+    { path: "/contect", label: "Contact" },
+    { path: "/github", label: "Github" },
+  ];
+
   return (
-    <footer className="bg-white border-y">
-      <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-        <div className="md:flex md:justify-between">
-          {/* Logo Section */}
-          <div className="mb-6 md:mb-0">
-            <Link to="/" className="flex items-center">
-              <img
-                src="https://alexharkness.com/wp-content/uploads/2020/06/logo-2.png"
-                className="mr-3 h-16"
-                alt="Darshana Sharma logo"
-              />
-            </Link>
+    <header className="shadow sticky z-50 top-0 bg-white">
+      <div className="mx-auto max-w-screen-xl px-4 lg:px-6">
+        {/* ---- TOP BAR ---- */}
+        <div className="relative flex items-center justify-between h-14 lg:h-16">
+
+          {/* LEFT — LOGO */}
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src={logoSrc}
+              alt="Dev Logo"
+              className="h-8 w-8 md:h-10 md:w-10 rounded-md bg-white p-[2px] shadow-sm"
+            />
+            <span className="hidden md:inline text-sm font-semibold text-gray-700">
+              Darshana
+            </span>
+          </Link>
+
+          {/* CENTER — GREETING (DESKTOP ONLY) */}
+          <div className="hidden lg:flex lg:flex-1 justify-center">
+            {user && (
+              <span className="text-gray-700 text-sm">
+                👋 Hi,{" "}
+                <span className="text-orange-600 font-medium">{user.username}</span>
+              </span>
+            )}
           </div>
 
-          {/* Navigation Sections */}
-          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-            {/* Resources */}
-            <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
-                Resources
-              </h2>
-              <ul className="text-gray-500 font-medium">
-                <li className="mb-4">
-                  <Link to="/" className="hover:underline">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/about" className="hover:underline">
-                    About
-                  </Link>
-                </li>
-              </ul>
-            </div>
+          {/* RIGHT — LOGIN / LOGOUT + HAMBURGER (ALWAYS RIGHT) */}
+          <div className="flex items-center gap-3 ml-auto">
 
-            {/* Follow Us */}
-            <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
-                Follow us
-              </h2>
-              <ul className="text-gray-500 font-medium">
-                <li className="mb-4">
-                  <a
-                    href="https://github.com/DarshanaSharma48"
-                    className="hover:underline"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://discord.com/"
-                    className="hover:underline"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Discord
-                  </a>
-                </li>
-              </ul>
-            </div>
+            {/* LOGIN/LOGOUT (visible on all sizes) */}
+            {!user ? (
+              <Link
+                to="/login"
+                className="text-gray-800 bg-white border border-gray-300 hover:bg-gray-50 px-3 py-1.5 rounded-md text-sm"
+              >
+                Log in
+              </Link>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="text-white bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded-md text-sm"
+              >
+                Logout
+              </button>
+            )}
 
-            {/* Legal */}
-            <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
-                Legal
-              </h2>
-              <ul className="text-gray-500 font-medium">
-                <li className="mb-4">
-                  <button
-                    type="button"
-                    className="hover:underline text-left"
-                    onClick={() => alert("Privacy Policy coming soon!")}
-                  >
-                    Privacy Policy
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="hover:underline text-left"
-                    onClick={() => alert("Terms & Conditions coming soon!")}
-                  >
-                    Terms & Conditions
-                  </button>
-                </li>
-              </ul>
-            </div>
+            {/* HAMBURGER BUTTON */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-expanded={menuOpen}
+              aria-label="Toggle navigation"
+              className="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </div>
 
-        {/* Divider */}
-        <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8" />
+        {/* ---- MOBILE MENU ---- */}
+        <div
+          className={`absolute left-0 right-0 top-full bg-white shadow-md z-40 transition-all duration-150 lg:hidden ${
+            menuOpen ? "block" : "hidden"
+          }`}
+        >
+          <div className="px-4 pt-4 pb-6">
 
-        {/* Bottom Bar */}
-        <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center">
-            © 2025{" "}
-            <a
-              href="https://github.com/DarshanaSharma48"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:underline"
-            >
-              Darshana Sharma
-            </a>
-            . All Rights Reserved.
-          </span>
+            {/* NAV LINKS */}
+            <nav>
+              <ul className="flex flex-col gap-2">
+                {navItems.map((item) => (
+                  <li key={item.path}>
+                    <NavLink
+                      to={item.path}
+                      onClick={() => setMenuOpen(false)}
+                      className={({ isActive }) =>
+                        `block w-full text-left px-3 py-2 rounded-md text-sm ${
+                          isActive ? "text-orange-700 font-semibold" : "text-gray-700"
+                        } hover:bg-gray-50`
+                      }
+                    >
+                      {item.label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          {/* Social Media Icons */}
-          <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0 text-gray-500">
-            {/* Facebook */}
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-gray-900"
-            >
-              <svg
-                className="w-4 h-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 8 19"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
-                />
-              </svg>
-              <span className="sr-only">Facebook</span>
-            </a>
+            {/* DIVIDER */}
+            <hr className="my-4" />
 
-            {/* Twitter */}
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-gray-900"
-            >
-              <svg
-                className="w-4 h-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 17"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M20 1.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.344 8.344 0 0 1-2.605.98A4.13 4.13 0 0 0 13.85 0a4.068 4.068 0 0 0-4.1 4.038 4 4 0 0 0 .105.919A11.705 11.705 0 0 1 1.4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 4.1 9.635a4.19 4.19 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 0 14.184 11.732 11.732 0 0 0 6.291 16 11.502 11.502 0 0 0 17.964 4.5c0-.177 0-.35-.012-.523A8.143 8.143 0 0 0 20 1.892Z"
-                />
-              </svg>
-              <span className="sr-only">Twitter</span>
-            </a>
-
-            {/* GitHub */}
-            <a
-              href="https://github.com/DarshanaSharma48"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-gray-900"
-            >
-              <svg
-                className="w-4 h-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z"
-                />
-              </svg>
-              <span className="sr-only">GitHub</span>
-            </a>
+            {/* AUTH BUTTONS IN MOBILE MENU */}
+            <div className="flex flex-col gap-3">
+              {!user ? (
+                <Link
+                  to="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className="block text-center px-3 py-2 rounded-md bg-indigo-600 text-white"
+                >
+                  Log in
+                </Link>
+              ) : (
+                <>
+                  <div className="text-sm text-gray-700 text-center">
+                    👋 <span className="font-medium text-orange-600">{user.username}</span>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-center px-3 py-2 rounded-md bg-red-600 text-white"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </footer>
+    </header>
   );
 }

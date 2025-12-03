@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import UserContext from "../../Context/UserContext";
 
 export default function Header() {
   const { user, setUser } = useContext(UserContext);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     setUser(null);
@@ -14,51 +15,50 @@ export default function Header() {
     <header className="shadow sticky z-50 top-0 bg-white">
       <nav className="border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img
-              src="https://alexharkness.com/wp-content/uploads/2020/06/logo-2.png"
-              className="mr-3 h-12"
-              alt="Logo"
+              src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png"
+              alt="Dev Logo"
+              className="h-8 md:h-10 lg:h-12"
             />
           </Link>
-
-          {/* Right side - Auth Buttons */}
-          <div className="flex items-center lg:order-2">
-            {!user ? (
-              <>
+          {/* <div className="flex gap-2"> */}
+            <div className="flex items-center lg:order-2">
+              {!user ? (
                 <Link
                   to="/login"
-                  className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
+                  className="text-gray-800 hover:bg-gray-50 font-medium rounded-lg text-sm px-4 py-2 mr-2"
                 >
                   Log in
                 </Link>
-                <Link
-                  to="#"
-                  className="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
-                >
-                  Get started
-                </Link>
-              </>
-            ) : (
-              <>
-                <span className="text-gray-800 font-medium mr-4">
-                  👋 Hi, <span className="text-orange-700">{user.username}</span>
-                </span>
-                <button
-                  onClick={handleLogout}
-                  className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
-                >
-                  Logout
-                </button>
-              </>
-            )}
-          </div>
+              ) : (
+                <>
+                  <span className="text-gray-800 font-medium mr-4">
+                    👋 Hi, <span className="text-orange-700">{user.username}</span>
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-4 py-2"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+            </div>
 
-          {/* Navigation Links */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="lg:hidden text-gray-700 text-3xl focus:outline-none"
+            >
+              ☰
+            </button>
+          {/* </div> */}
           <div
-            className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-            id="mobile-menu-2"
+            className={`${
+              menuOpen ? "block" : "hidden"
+            } w-full lg:flex lg:w-auto lg:order-1`}
           >
             <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               {[
@@ -82,6 +82,7 @@ export default function Header() {
               ))}
             </ul>
           </div>
+
         </div>
       </nav>
     </header>
