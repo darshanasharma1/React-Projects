@@ -40,21 +40,35 @@ export default function Contact() {
             {/* Left card */}
             <div className="p-6 bg-white rounded-xl shadow-sm">
               <h2 className="text-3xl font-extrabold text-gray-800">Get in touch:</h2>
-              <p className="mt-2 text-gray-600">Fill the form to start a conversation</p>
+              <p className="mt-2 text-gray-600">Feel free to reach out anytime!</p>
 
               <div className="mt-6 space-y-5 text-gray-700">
+
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">📍</span>
-                  <div className="font-semibold">Acme Inc, Street, State, Postal Code</div>
+                  <div className="font-semibold">Navi Mumbai, Maharastra</div>
                 </div>
+
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">📞</span>
-                  <div className="font-semibold">+44 1234567890</div>
+                  <a
+                    href="tel:7046199461"
+                    className="font-semibold hover:text-blue-600"
+                  >
+                    7046199461
+                  </a>
                 </div>
+
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">✉️</span>
-                  <div className="font-semibold">info@acme.org</div>
+                  <a
+                    href="mailto:darshanasharma48@gmail.com"
+                    className="font-semibold hover:text-blue-600"
+                  >
+                    darshanasharma48@gmail.com
+                  </a>
                 </div>
+
               </div>
             </div>
 
