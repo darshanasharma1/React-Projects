@@ -1,0 +1,36 @@
+name: Deploy Portfolio App
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'portfolio/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        working-directory: portfolio
+        run: npm ci
+
+      - name: Build project
+        working-directory: portfolio
+        run: npm run build
+
+      - name: Deploy to gh-pages/portfolio
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: portfolio/build
+          destination_dir: portfolio
